@@ -3,7 +3,10 @@
     "version": "0.2.0",
     "homepage": "https://jolienhoop.com",
     "description": "This is a clean customizable portfolio template for developers.",
-    "repository": "https://github.com/JoHoop/personal-website-react",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/JoHoop/personal-website-react.git"
+    },
     "author": "Jo Lienhoop <hey@jolienhoop.com>",
     "license": "MIT",
     "dependencies": {
@@ -14,7 +17,11 @@
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
         "classnames": "^2.2.6",
+        "cors": "^2.8.6",
+        "dotenv": "^17.4.2",
+        "express": "^4.22.1",
         "ios-inner-height": "^1.1.1",
+        "node-fetch": "^3.3.2",
         "popmotion": "^8.7.3",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
@@ -28,6 +35,7 @@
         "use-dencrypt-effect": "1.0.1"
     },
     "scripts": {
+        "server": "node server.js",
         "start": "react-scripts start",
         "build": "react-scripts build && react-snapshot",
         "test": "react-scripts test",
@@ -40,7 +48,11 @@
         "snapshotDelay": 1000
     },
     "eslintConfig": {
-        "extends": "react-app"
+        "extends": "react-app",
+        "parserOptions": {
+            "ecmaVersion": 2022,
+            "sourceType": "module"
+        }
     },
     "browserslist": {
         "production": [
@@ -53,5 +65,13 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "main": "server.js",
+    "devDependencies": {
+        "jest": "^27.5.1"
+    },
+    "keywords": [],
+    "bugs": {
+        "url": "https://github.com/JoHoop/personal-website-react/issues"
     }
 }
