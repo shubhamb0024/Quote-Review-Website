@@ -41,7 +41,7 @@ export async function submitQuote(displayResult) {
 
     let res;
     try {
-        res = await fetch("http://localhost:3000/analyze-quote", {
+        res = await fetch("http://localhost:5000/analyze-quote", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -52,7 +52,30 @@ export async function submitQuote(displayResult) {
         show({
             error:
                 err?.message ||
-                "Could not reach the API. Is the server running on port 3000?",
+                "Could not reach the API. Is the server running on port 5000?",
+        });
+        return;
+    }
+
+    if (!res.ok) {
+        const responseText = await res.text().catch(() => "");
+        console.error(
+            "[submitQuote] Response not OK; status:",
+            res.status,
+            "body:",
+            responseText
+        );
+        let parsed;
+        try {
+            parsed = JSON.parse(responseText);
+        } catch {
+            parsed = null;
+        }
+        show({
+            error:
+                typeof parsed?.error === "string"
+                    ? parsed.error
+                    : `Request failed with status ${res.status}.`,
         });
         return;
     }
@@ -62,16 +85,6 @@ export async function submitQuote(displayResult) {
         data = await res.json();
     } catch {
         show({ error: "The server returned a response that is not JSON." });
-        return;
-    }
-
-    if (!res.ok) {
-        show({
-            error:
-                typeof data.error === "string"
-                    ? data.error
-                    : `Request failed with status ${res.status}.`,
-        });
         return;
     }
 
