@@ -1,16 +1,16 @@
 {
     "basics": {
-        "name": "Jo Lienhoop",
+        "name": "Impactful Quote",
         "label": "Computer Science student",
-        "email": "hey@jolienhoop.com",
+        "email": "sutharaary17@gmail.com",
         "phone": "(XXX) XXX-XXXX",
         "picture": "jl.png",
         "x_title": "Hey, I'm",
         "job": "CS student",
-        "description": "Hey, I'm Jo Lienhoop, a Computer Science student based in Bremen, Germany. I love all things technical. Talk soon!",
-        "summary": "based in Bremen, Germany.",
+        "description": "",
+        "summary": "",
         "keywords": "personal,website,portfolio,template,kit,jo,lienhoop,jolienhoop,computer,science,bremen,germany,react,github,linkedin,google,gitlab,telegram,material,design,ui,webapp",
-        "url": "https://jolienhoop.com",
+        "url": "https://github.com/shubhamb0024/Quote-Review-Website",
         "location": {
             "address": "XX XXXXXstreet",
             "postalCode": "XXXXX",
@@ -22,26 +22,26 @@
         "profiles": [
             {
                 "network": "Google",
-                "username": "hey@jolienhoop.com",
-                "url": "mailto:hey@jolienhoop.com",
+                "username": "https://github.com/shubhamb0024/Quote-Review-Website",
+                "url": "mailto:sutharaary17@gmail.com",
                 "x_icon": "fab fa-google"
             },
             {
                 "network": "LinkedIn",
-                "username": "jolienhoop",
-                "url": "https://www.linkedin.com/in/jolienhoop/",
+                "username": "Impactful Quote",
+                "url": "https://github.com/shubhamb0024/Quote-Review-Website",
                 "x_icon": "fab fa-linkedin-in"
             },
             {
                 "network": "GitHub",
-                "username": "johoop",
-                "url": "https://github.com/JoHoop",
+                "username": "Impactful Quote",
+                "url": "https://github.com/shubhamb0024/Quote-Review-Website",
                 "x_icon": "fab fa-github"
             },
             {
                 "network": "GitLab",
-                "username": "joli",
-                "url": "https://gitlab.informatik.uni-bremen.de/joli",
+                "username": "Impactful Quote",
+                "url": "https://github.com/shubhamb0024/Quote-Review-Website",
                 "x_icon": "fab fa-gitlab"
             }
         ]
@@ -50,7 +50,7 @@
         {
             "company": "Company",
             "position": "President",
-            "website": "http://company.com",
+            "website": "https://github.com/shubhamb0024/Quote-Review-Website",
             "startDate": "2013-01-01",
             "endDate": "2014-01-01",
             "summary": "Description...",
@@ -61,7 +61,7 @@
         {
             "organization": "Organization",
             "position": "Volunteer",
-            "website": "http://organization.com/",
+            "website": "https://github.com/shubhamb0024/Quote-Review-Website",
             "startDate": "2012-01-01",
             "endDate": "2013-01-01",
             "summary": "Description...",
@@ -92,7 +92,7 @@
             "name": "Publication",
             "publisher": "Company",
             "releaseDate": "2014-10-01",
-            "website": "http://publication.com",
+            "website": "https://github.com/shubhamb0024/Quote-Review-Website",
             "summary": "Description..."
         }
     ],

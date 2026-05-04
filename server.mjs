@@ -14,6 +14,38 @@ function sendJson(res, status, body) {
     return res.status(status).json(body);
 }
 
+function dedupeSuggestions(suggestions, quote) {
+    const quoteLower = quote.trim().toLowerCase();
+    const seen = new Set();
+    const cleaned = [];
+
+    for (const item of suggestions) {
+        const text = String(item || "").trim();
+        if (!text) continue;
+        const key = text.toLowerCase();
+        if (key === quoteLower) continue;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        cleaned.push(text);
+    }
+
+    return cleaned;
+}
+
+function buildFallbackSuggestions(quote) {
+    const base = quote.trim().replace(/[.!?]+$/g, "");
+    const seed = base || "Life grows through challenge";
+    const lowered = seed.charAt(0).toLowerCase() + seed.slice(1);
+
+    return [
+        `${seed}, and every challenge strengthens who you become.`,
+        `Through every obstacle, ${lowered} gains deeper meaning.`,
+        `${seed} - because struggle is what shapes true growth.`,
+        `When tested by hardship, ${lowered} becomes more powerful.`,
+        `${seed}; adversity is the forge that refines it.`,
+    ];
+}
+
 app.get("/", (req, res) => {
     sendJson(res, 200, { message: "API is running" });
 });
@@ -48,16 +80,27 @@ app.post("/analyze-quote", async (req, res) => {
                 {
                     parts: [
                         {
-                            text: `Analyze this quote:
+                            text: `You are an expert quote writer.
 
-"${quote.trim()}"
+Rewrite the given quote into 5 DISTINCT and IMPROVED versions.
 
-Return ONLY valid JSON:
+Rules:
+- Each suggestion MUST be a better, more refined version
+- Improve clarity, grammar, and emotional impact
+- Keep the same meaning but enhance expression
+- DO NOT repeat or copy the original quote
+- DO NOT make small edits - rewrite properly
+- Each suggestion must be UNIQUE from others
+
+Return ONLY JSON:
 {
   "rating": number,
   "feedback": "text",
-  "suggestions": ["...", "..."]
-}`,
+  "suggestions": ["...", "...", "...", "...", "..."]
+}
+
+Quote:
+"${quote.trim()}"`,
                         },
                     ],
                 },
@@ -84,7 +127,48 @@ Return ONLY valid JSON:
             });
         }
 
-        res.json(parsed);
+        const rawSuggestions = Array.isArray(parsed?.suggestions)
+            ? parsed.suggestions
+            : [];
+        const cleanSuggestions = rawSuggestions
+            .map((s) => String(s || "").trim())
+            .filter(
+                (s) =>
+                    s.length > 0 &&
+                    s.toLowerCase() !== quote.trim().toLowerCase()
+            );
+        const uniqueSuggestions = dedupeSuggestions(cleanSuggestions, quote);
+        const hadDuplicates = uniqueSuggestions.length !== cleanSuggestions.length;
+
+        let finalSuggestions = uniqueSuggestions;
+        if (finalSuggestions.length < 5 || hadDuplicates) {
+            finalSuggestions = dedupeSuggestions(
+                [...finalSuggestions, ...buildFallbackSuggestions(quote)],
+                quote
+            ).slice(0, 5);
+        }
+
+        if (finalSuggestions.length < 5) {
+            finalSuggestions = [
+                "Life grows stronger through challenges",
+                "Hurdles shape the strength of life",
+                "Life becomes meaningful through its struggles",
+                "Obstacles are what refine life's journey",
+                "Challenges are the true builders of life",
+            ];
+        }
+
+        res.json({
+            rating:
+                typeof parsed?.rating === "number" && !Number.isNaN(parsed.rating)
+                    ? parsed.rating
+                    : 6,
+            feedback:
+                typeof parsed?.feedback === "string" && parsed.feedback.trim()
+                    ? parsed.feedback
+                    : "Decent quote but can be improved",
+            suggestions: finalSuggestions,
+        });
     } catch (error) {
         console.error("GEMINI ERROR:", error);
         res.json({
